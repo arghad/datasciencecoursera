@@ -17,50 +17,59 @@ Cook Book for Run Analysis for the course "Getting and Cleaning Data"
     subject_test <- read.table(paste(directory, "/test/subject_test.txt", sep=""), sep="")
 ```	
     
-     merge the data into one test data set
+    Merge the data into one test data set
 ```{r Code}	
     test_set <- cbind(X_test, Y_test, subject_test)
 ```	
     
     # +++++++++++++++++++++++++++++++++++++++++++++++++
     ## Read the training data set from test dirctory    
-    # Read the measurements of train data set
+    Read the measurements of train data set
+```{r Code}		
     X_train <- read.table(paste(directory, "/train/X_train.txt", sep=""), sep="")
-    
-    # Read the activities of train data set
+```    
+  	Read the activities of train data set
+```{r Code}		
     Y_train <- read.table(paste(directory, "/train/Y_train.txt", sep=""), sep="")
-    
-    # Read the subject of train data set
+```    
+    Read the subject of train data set
+```{r Code}		
     subject_train <- read.table(paste(directory, "/train/subject_train.txt", sep=""), sep="")
-    
-    # merge the data into one train data set
+```    
+    merge the data into one train data set
+```{r Code}		
     train_set <- cbind(X_train, Y_train, subject_train)
-    
+```    
     
     # ***********************************************
     ## 1. Merges the training and the test sets to create one data set
+```{r Code}		
     merged_set <- rbind(test_set, train_set)
-    
+```    
     
     # ***********************************************
     ## 2. Extracts only the measurements on the mean and standard deviation for each measurement
+```{r Code}		
     featuresNames <- read.table(paste(directory, "/features.txt", sep=""), sep="")
     featuresNames <- featuresNames[,"V2"]
     columnNames <- c(as.character(featuresNames), "Activity", "Subject")
     colnames(merged_set) <- columnNames
     merged_set_updated <- merged_set[,columnNames[grep("mean[()]|std[()]|Activity|Subject", columnNames)]]
-    
+```
     # ***********************************************
     ## 3. Uses descriptive activity names to name the activities in the data set
+```{r Code}		
     activity_names <- c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS","SITTING", "STANDING","LAYING")    
-    
+```    
     # ***********************************************
     ## 4. Appropriately labels the data set with descriptive activity names
+```{r Code}		
     merged_set_updated$activity_name <- activity_names[merged_set_updated$Activity]
-    
+```
     
     # ***********************************************
     ## 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+```{r Code}		
     dataMelt <- melt(merged_set_updated,id=c("activity_name","Activity","Subject"),measure.vars=columnNames[grep("mean[()]|std[()]", columnNames)])
     
     second_tidy_data <- aggregate( formula = dataMelt$value~dataMelt$activity_name+dataMelt$Subject+dataMelt$variable, 
@@ -69,4 +78,4 @@ Cook Book for Run Analysis for the course "Getting and Cleaning Data"
     
     write.table(second_tidy_data, "second_tidy_data.txt", sep=",")
 		
-	```
+```
