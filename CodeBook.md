@@ -1,20 +1,26 @@
 Cook Book for Run Analysis for the course "Getting and Cleaning Data"
 ========================================================
+
+    # Phase 0. Preparation of data before start merging
+     +++++++++++++++++++++++++++++++++++++++++++++++
+    # Read the testing data set from test dirctory    
+     Read the measurements of test data set
 ```{r Code}
-    ## 0. Preparation of data before start merging
-    # +++++++++++++++++++++++++++++++++++++++++++++++
-    ## Read the testing data set from test dirctory    
-    # Read the measurements of test data set
     X_test <- read.table(paste(directory, "/test/X_test.txt", sep=""), sep="")
-    
-    # Read the activities of test data set
+```    
+    Read the activities of test data set
+```{r Code}		
     Y_test <- read.table(paste(directory, "/test/Y_test.txt", sep=""), sep="")
-    
-    # Read the subject of test data set
+```    
+    Read the subject of test data set
+```{r Code}	
     subject_test <- read.table(paste(directory, "/test/subject_test.txt", sep=""), sep="")
+```	
     
-    # merge the data into one test data set
+     merge the data into one test data set
+```{r Code}	
     test_set <- cbind(X_test, Y_test, subject_test)
+```	
     
     # +++++++++++++++++++++++++++++++++++++++++++++++++
     ## Read the training data set from test dirctory    
